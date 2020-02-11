@@ -32,7 +32,7 @@ class ReduxReactDemo extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        count: state
+        count: state.counter
     }
 }
 

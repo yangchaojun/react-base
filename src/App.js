@@ -9,6 +9,7 @@ import UCenter from "./pages/UCenter";
 import ReduxDemo from "./pages/ReduxDemo"
 import ReduxReactDemo from "./pages/ReduxReactDemo"
 import ReduxReactDemoOptimise from "./pages/ReduxReactDemoOptimise"
+import UserNum from "./pages/UserNum";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/redux-demo" component={ReduxDemo}></Route>
           <Route path="/redux-react-demo" component={ReduxReactDemo}></Route>
           <Route path="/redux-react-demo-optimise" component={ReduxReactDemoOptimise}></Route>
+          <Route path="/user-num" component={UserNum}></Route>
           <Route component={NotFound}></Route>
         </Switch>
       </Router>
