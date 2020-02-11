@@ -22,8 +22,8 @@ class ReduxReactDemo extends React.Component {
                 <p className="text-center">
                     {/* <button onClick={ this.props.increment } className="btn btn-primary">increment</button>
                     <button onClick={ this.props.decrement } className="btn btn-success">decrement</button> */}
-                    <button onClick={ counterActions.increment } className="btn btn-primary">increment</button>
-                    <button onClick={ counterActions.decrement } className="btn btn-success">decrement</button>
+                    <button onClick={ () => {counterActions.increment(6)}  } className="btn btn-primary">increment</button>
+                    <button onClick={ () => {counterActions.decrement(3)} } className="btn btn-success">decrement</button>
                 </p>
             </div>
         )

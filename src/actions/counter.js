@@ -1,11 +1,14 @@
-export function increment() {
+import * as actionTypes from '../types'
+export function increment(num = 1) {
     return {
-        type: 'INCREMENT'
+        type: actionTypes.INCREMENT,
+        num
     }
 }
 
-export function decrement() {
+export function decrement(num = 1) {
     return {
-        type: 'DECREMENT'
+        type: actionTypes.DECREMENT,
+        num
     }
 }
