@@ -4,6 +4,7 @@ import {createStore, applyMiddleware} from 'redux'
 import rootReducer from './reducers'
 
 import logger from 'redux-logger'
+import thunk from 'redux-thunk'
 
 // logger中间件
 // const logger = store => next => action => {
@@ -22,6 +23,6 @@ const error = store => next => action => {
     }
 }
 
-const store = createStore(rootReducer, {}, applyMiddleware(logger, error))
+const store = createStore(rootReducer, {}, applyMiddleware(logger, error, thunk))
 
 export default store
