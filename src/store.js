@@ -11,6 +11,15 @@ const logger = store => next => action => {
     return result
 }
 
-const store = createStore(rootReducer, {}, applyMiddleware(logger))
+// error中间件
+const error = store => next => action => {
+    try {
+        next(action)
+    } catch(e) {
+        console.log('error:', e)
+    }
+}
+
+const store = createStore(rootReducer, {}, applyMiddleware(logger, error))
 
 export default store
