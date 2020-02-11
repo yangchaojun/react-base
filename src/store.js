@@ -3,13 +3,15 @@ import {createStore, applyMiddleware} from 'redux'
 
 import rootReducer from './reducers'
 
+import logger from 'redux-logger'
+
 // logger中间件
-const logger = store => next => action => {
-    console.log('dispatch:', action)
-    let result = next(action)
-    console.log('state:', store.getState())
-    return result
-}
+// const logger = store => next => action => {
+//     console.log('dispatch:', action)
+//     let result = next(action)
+//     console.log('state:', store.getState())
+//     return result
+// }
 
 // error中间件
 const error = store => next => action => {
