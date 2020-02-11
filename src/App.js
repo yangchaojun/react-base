@@ -8,6 +8,7 @@ import Mine from "./pages/Mine";
 import UCenter from "./pages/UCenter";
 import ReduxDemo from "./pages/ReduxDemo"
 import ReduxReactDemo from "./pages/ReduxReactDemo"
+import ReduxReactDemoOptimise from "./pages/ReduxReactDemoOptimise"
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/mine/ucenter" component={UCenter}></Route>
           <Route path="/redux-demo" component={ReduxDemo}></Route>
           <Route path="/redux-react-demo" component={ReduxReactDemo}></Route>
+          <Route path="/redux-react-demo-optimise" component={ReduxReactDemoOptimise}></Route>
           <Route component={NotFound}></Route>
         </Switch>
       </Router>
