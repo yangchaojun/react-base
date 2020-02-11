@@ -23,6 +23,8 @@ const error = store => next => action => {
     }
 }
 
-const store = createStore(rootReducer, {}, applyMiddleware(logger, error, thunk))
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ;
+
+const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(logger, error, thunk)))
 
 export default store

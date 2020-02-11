@@ -8,9 +8,13 @@ class UserNum extends React.Component {
         console.log(this.props)
         return(
             <h1 className="jumbotron text-center">
-                当前人数为：{this.props.userNum}
+                当前人数为：{this.props.user.userNum}
                 <p className="text-center">
                     <button onClick={ () => this.props.userActions.addUser() } className="btn btn-success">增加</button>
+                    <button onClick={ () => this.props.userActions.fetchUserInfo() } className="btn btn-primary">获取用户</button>
+                </p>
+                <p className="text-center">
+                    title: {this.props.user.userInfo.title ? this.props.user.userInfo.title : ''}
                 </p>
             </h1>
         )
@@ -19,7 +23,7 @@ class UserNum extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        userNum: state.user
+        user: state.user
     }
 }
 
