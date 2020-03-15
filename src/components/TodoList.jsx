@@ -1,61 +1,37 @@
 import React, { Component } from "react"
-import { store } from "../store"
-import {
-	getAddTodoItemAction,
-	getInputValueAction,
-	getDeleteTodoItemAction,
-  getInitList
-} from "../store/actionCreators"
-import TodoListUI from "./TodoListUI"
+import {connect} from 'react-redux'
 
-export default class TodoList extends Component {
-	constructor(props) {
-		super(props)
-		this.state = store.getState()
-		this.handleInputChange = this.handleInputChange.bind(this)
-		this.handleStoreChange = this.handleStoreChange.bind(this)
-		this.handleClick = this.handleClick.bind(this)
-		this.handleItemDelete = this.handleItemDelete.bind(this)
-		store.subscribe(this.handleStoreChange)
-	}
-
-	componentDidMount() {
-    const action = getInitList()
-    store.dispatch(action)
-	}
+class TodoList extends Component {
 
 	render() {
-		const { inputValue, list } = this.state
 		return (
-			<TodoListUI
-				inputValue={inputValue}
-				list={list}
-				handleInputChange={this.handleInputChange}
-				handleClick={this.handleClick}
-				handleItemDelete={this.handleItemDelete}
-			/>
+			<div style={{padding: '10px'}}>
+				<div>
+					<input type="text" value={this.props.inputValue} onChange={this.props.handleInputChange}/>
+					<button>提交</button>
+				</div>
+				<ul>
+					<li>1222</li>
+				</ul>
+			</div>
 		)
 	}
+}
 
-	handleInputChange(e) {
-		const action = getInputValueAction(e.target.value)
-		store.dispatch(action)
-	}
+const mapStateToProps = (state) => ({
+	...state
+}) 
 
-	handleStoreChange() {
-		this.setState(store.getState())
-	}
-
-	handleClick() {
-		if (this.state.inputValue === "") return
-		const action = getAddTodoItemAction()
-
-		store.dispatch(action)
-	}
-
-	handleItemDelete(index) {
-		const action = getDeleteTodoItemAction(index)
-
-		store.dispatch(action)
+const mapDispatchToProps = (dispatch) => {
+	return {
+		handleInputChange(e) {
+			const action = {
+				type: 'CHANGE_INPUT_VALUE',
+				value: e.target.value
+			}
+			dispatch(action)
+		}
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
