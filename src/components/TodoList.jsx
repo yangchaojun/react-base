@@ -3,7 +3,8 @@ import { store } from "../store"
 import {
   getAddTodoItemAction,
   getInputValueAction,
-  getDeleteTodoItemAction
+  getDeleteTodoItemAction,
+  getTodoList
 } from '../store/actionCreators'
 import TodoListUI from './TodoListUI'
 
@@ -16,7 +17,12 @@ export default class TodoList extends Component {
     this.handleClick = this.handleClick.bind(this)
     this.handleItemDelete = this.handleItemDelete.bind(this)
     store.subscribe(this.handleStoreChange)
-	}
+  }
+  
+  componentDidMount() {
+    const action = getTodoList()
+    store.dispatch(action)
+  }
 
 	render() {
 		const { inputValue, list } = this.state
