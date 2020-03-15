@@ -1,13 +1,7 @@
-const initialState = {
-  inputValue: 'hello world',
-  list: []
-}
+import { combineReducers } from 'redux'
 
-export default (state = initialState, action) => {
-  if (action.type === 'CHANGE_INPUT_VALUE') {
-    const newState = { ...state }
-    newState.inputValue = action.value 
-    return newState
-  }
-  return state
-}
+import { reducer as headerReducer } from '../common/header/store'
+
+export default combineReducers({
+  header: headerReducer
+})
