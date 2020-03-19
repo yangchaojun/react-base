@@ -11,6 +11,7 @@ import {
 } from "./style"
 import { CSSTransition } from "react-transition-group"
 import { connect } from "react-redux"
+import { actionCreators } from "./store"
 
 const Header = props => {
 	return (
@@ -24,11 +25,7 @@ const Header = props => {
 					<i className="iconfont">&#xe636;</i>
 				</NavItem>
 				<SearchWrapper>
-					<CSSTransition
-						in={props.focused}
-						timeout={200}
-						classNames="slide"
-					>
+					<CSSTransition in={props.focused} timeout={200} classNames="slide">
 						<NavSearch
 							className={props.focused ? "focused" : ""}
 							onFocus={props.handleInputFocus}
@@ -58,16 +55,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
 	return {
 		handleInputFocus() {
-			const action = {
-				type: "SEARCH_FOCUSED"
-			}
-			dispatch(action)
+			dispatch(actionCreators.searchFoucs())
 		},
 		handleInputBlur() {
-			const action = {
-				type: "SEARCH_BLURED"
-			}
-			dispatch(action)
+			dispatch(actionCreators.searchBlur())
 		}
 	}
 }
