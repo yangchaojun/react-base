@@ -5,6 +5,11 @@ import {
 	Nav,
 	NavItem,
 	SearchWrapper,
+	SearchInfo,
+	SearchInfoTitle,
+	SearchInfoSwitch,
+	SearchInfoList,
+	SearchInfoItem,
 	NavSearch,
 	Addition,
 	Button
@@ -14,6 +19,23 @@ import { connect } from "react-redux"
 import { actionCreators } from "./store"
 
 const Header = props => {
+	function getListArea() {
+		if (props.focused) {
+			return (
+				<SearchInfo>
+					<SearchInfoTitle>
+						热门搜索
+						<SearchInfoSwitch>换一批</SearchInfoSwitch>
+					</SearchInfoTitle>
+					<SearchInfoList>
+						{props.list.map(item => (
+							<SearchInfoItem key={item}>{item}</SearchInfoItem>
+						))}
+					</SearchInfoList>
+				</SearchInfo>
+			)
+		} else return null
+	}
 	return (
 		<HeaderWrapper>
 			<Logo />
@@ -25,7 +47,7 @@ const Header = props => {
 					<i className="iconfont">&#xe636;</i>
 				</NavItem>
 				<SearchWrapper>
-					<CSSTransition in={props.focused} timeout={200} classNames="slide">
+					<CSSTransition in={props.focused} timeout={300} classNames="slide">
 						<NavSearch
 							className={props.focused ? "focused" : ""}
 							onFocus={props.handleInputFocus}
@@ -35,6 +57,7 @@ const Header = props => {
 					<i className={props.focused ? "focused iconfont" : "iconfont"}>
 						&#xe637;
 					</i>
+					{getListArea()}
 				</SearchWrapper>
 			</Nav>
 			<Addition>
@@ -49,12 +72,14 @@ const Header = props => {
 }
 
 const mapStateToProps = state => ({
-	focused: state.header.focused
+	focused: state.getIn(["header", "focused"]),
+	list: state.getIn(["header", "list"])
 })
 
 const mapDispatchToProps = dispatch => {
 	return {
 		handleInputFocus() {
+			dispatch(actionCreators.getList())
 			dispatch(actionCreators.searchFoucs())
 		},
 		handleInputBlur() {

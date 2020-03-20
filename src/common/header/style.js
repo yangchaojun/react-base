@@ -49,6 +49,7 @@ export const NavItem = styled.div`
 export const SearchWrapper = styled.div`
   float: left;
   position: relative;
+  padding-left: 15px;
   .iconfont {
     width: 30px;
     line-height: 30px;
@@ -64,36 +65,97 @@ export const SearchWrapper = styled.div`
   }
 `
 
+export const SearchInfo = styled.div`
+  position: absolute;
+  left: 15px;
+  top: 56px;
+  width: 240px;
+  padding: 0 20px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+  &:before {
+    position: absolute;
+    background-color: #fff;
+    content: "";
+    left: 27px;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    top: -5px;
+    z-index: -1;
+    box-sizing: border-box;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-bottom-color: #fff;
+    left: 20px;
+    bottom: 99%;
+    box-sizing: border-box;
+  }
+`
+export const SearchInfoTitle = styled.div`
+  line-height: 20px;
+  font-size: 14px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  color: #969696;
+`
+export const SearchInfoSwitch = styled.span`
+  float: right;
+  font-size: 13px;
+`
+export const SearchInfoList = styled.div`
+  overflow: hidden;
+`
+export const SearchInfoItem = styled.a`
+  display: block;
+  padding: 0 5px;
+  line-height: 20px;
+  font-size: 14px;
+  color: #787878;
+  border: 1px solid #ddd;
+  float: left;
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  &:hover {
+    color: #333;
+    border-color: #b4b4b4;
+  }
+`
+
 export const NavSearch = styled.input.attrs({
   placeholder: '搜索'
 })`
-  width: 160px;
+  width: 240px;
   height: 38px;
   padding: 0 30px 0 20px;
   margin-top: 9px;
-  margin-left: 20px;
   box-sizing: border-box;
   border: none;
   outline: none;
   border-radius: 19px;
   background: #eee;
-  fons-size: 15px;
+  font-size: 15px;
   color: #666;
   &::placeholder {
     color: #999;
   }
   &.focused {
-    width: 240px;
+    width: 320px;
   }
 
   &.slide-enter, &.slide-exit {
-    transition: all .2s ease-out;
+    transition: all .3s ease-out;
   }
   &.slide-enter-active {
-    width: 240px;
+    width: 320px;
   }
   &.slide-exit-active {
-    width: 160px;
+    width: 240px;
   }
 `
 
