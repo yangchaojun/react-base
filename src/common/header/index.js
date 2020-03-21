@@ -19,18 +19,43 @@ import { connect } from "react-redux"
 import { actionCreators } from "./store"
 
 const Header = props => {
+	const {
+		focused,
+		list,
+		page,
+		totalPage,
+		mouseIn,
+		handleInputBlur,
+		handleInputFocus,
+		handleMouseEnter,
+		handleMouseLeave,
+		handleChangePage
+	} = props
+	let spinIcon = null
+
 	function getListArea() {
-		if (props.focused) {
+		const newList = list.toJS()
+		if (focused || mouseIn) {
+			const itemList = []
+			if (newList.length) {
+				for(let i = (page - 1) * 9; i < page * 9; i ++) {
+					itemList.push(<SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>)
+				}
+			}
 			return (
-				<SearchInfo>
+				<SearchInfo
+					onMouseEnter={handleMouseEnter}
+					onMouseLeave={handleMouseLeave}
+				>
 					<SearchInfoTitle>
 						热门搜索
-						<SearchInfoSwitch>换一批</SearchInfoSwitch>
+						<SearchInfoSwitch onClick={() => handleChangePage(page, totalPage, spinIcon)}>
+							<i ref={(icon) => { spinIcon = icon}} className="iconfont spin">&#xe851;</i>
+							换一批
+						</SearchInfoSwitch>
 					</SearchInfoTitle>
 					<SearchInfoList>
-						{props.list.map(item => (
-							<SearchInfoItem key={item}>{item}</SearchInfoItem>
-						))}
+					 {itemList}
 					</SearchInfoList>
 				</SearchInfo>
 			)
@@ -47,22 +72,20 @@ const Header = props => {
 					<i className="iconfont">&#xe636;</i>
 				</NavItem>
 				<SearchWrapper>
-					<CSSTransition in={props.focused} timeout={300} classNames="slide">
+					<CSSTransition in={focused} timeout={300} classNames="slide">
 						<NavSearch
-							className={props.focused ? "focused" : ""}
-							onFocus={props.handleInputFocus}
-							onBlur={props.handleInputBlur}
+							className={focused ? "focused" : ""}
+							onFocus={() => handleInputFocus(list)}
+							onBlur={handleInputBlur}
 						/>
 					</CSSTransition>
-					<i className={props.focused ? "focused iconfont" : "iconfont"}>
-						&#xe637;
-					</i>
+					<i className={focused ? "focused iconfont zoom" : "iconfont zoom"}>&#xe637;</i>
 					{getListArea()}
 				</SearchWrapper>
 			</Nav>
 			<Addition>
 				<Button className="write-btn">
-					<i className="iconfont">&#xe66d;</i>
+					<i className="iconfont zoom">&#xe66d;</i>
 					写文章
 				</Button>
 				<Button className="sign-up">注册</Button>
@@ -73,17 +96,43 @@ const Header = props => {
 
 const mapStateToProps = state => ({
 	focused: state.getIn(["header", "focused"]),
-	list: state.getIn(["header", "list"])
+	list: state.getIn(["header", "list"]),
+	mouseIn: state.getIn(["header", "mouseIn"]),
+	page: state.getIn(["header", "page"]),
+	totalPage: state.getIn(["header", "totalPage"]),
 })
 
 const mapDispatchToProps = dispatch => {
 	return {
-		handleInputFocus() {
-			dispatch(actionCreators.getList())
+		handleInputFocus(list) {
+			if (list.size === 0) {
+				dispatch(actionCreators.getList())
+			}
 			dispatch(actionCreators.searchFoucs())
 		},
 		handleInputBlur() {
 			dispatch(actionCreators.searchBlur())
+		},
+		handleMouseEnter() {
+			dispatch(actionCreators.mouseEnter())
+		},
+		handleMouseLeave() {
+			dispatch(actionCreators.mouseLeave())
+		},
+		handleChangePage(page, totalPage, spin) {
+			let originAngle = spin.style.transform.replace(/[^0-9]/ig, '')
+			if (originAngle) {
+				originAngle = parseInt(originAngle)
+			} else {
+				originAngle = 0
+			}
+			spin.style.transform = `rotate(${originAngle + 360}deg)`
+			if (page < totalPage) {
+				dispatch(actionCreators.changePage(page + 1))
+			}
+			else {
+				dispatch(actionCreators.changePage(1))
+			}
 		}
 	}
 }
