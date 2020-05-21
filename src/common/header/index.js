@@ -17,6 +17,7 @@ import {
 import { CSSTransition } from "react-transition-group"
 import { connect } from "react-redux"
 import { actionCreators } from "./store"
+import { Link } from "react-router-dom"
 
 const Header = props => {
 	const {
@@ -38,8 +39,10 @@ const Header = props => {
 		if (focused || mouseIn) {
 			const itemList = []
 			if (newList.length) {
-				for(let i = (page - 1) * 9; i < page * 9; i ++) {
-					itemList.push(<SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>)
+				for (let i = (page - 1) * 9; i < page * 9; i++) {
+					itemList.push(
+						<SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+					)
 				}
 			}
 			return (
@@ -49,21 +52,30 @@ const Header = props => {
 				>
 					<SearchInfoTitle>
 						热门搜索
-						<SearchInfoSwitch onClick={() => handleChangePage(page, totalPage, spinIcon)}>
-							<i ref={(icon) => { spinIcon = icon}} className="iconfont spin">&#xe851;</i>
+						<SearchInfoSwitch
+							onClick={() => handleChangePage(page, totalPage, spinIcon)}
+						>
+							<i
+								ref={icon => {
+									spinIcon = icon
+								}}
+								className="iconfont spin"
+							>
+								&#xe851;
+							</i>
 							换一批
 						</SearchInfoSwitch>
 					</SearchInfoTitle>
-					<SearchInfoList>
-					 {itemList}
-					</SearchInfoList>
+					<SearchInfoList>{itemList}</SearchInfoList>
 				</SearchInfo>
 			)
 		} else return null
 	}
 	return (
 		<HeaderWrapper>
-			<Logo />
+			<Link to="/">
+				<Logo />
+			</Link>
 			<Nav>
 				<NavItem className="left active">首页</NavItem>
 				<NavItem className="left">下载App</NavItem>
@@ -79,7 +91,9 @@ const Header = props => {
 							onBlur={handleInputBlur}
 						/>
 					</CSSTransition>
-					<i className={focused ? "focused iconfont zoom" : "iconfont zoom"}>&#xe637;</i>
+					<i className={focused ? "focused iconfont zoom" : "iconfont zoom"}>
+						&#xe637;
+					</i>
 					{getListArea()}
 				</SearchWrapper>
 			</Nav>
@@ -99,7 +113,7 @@ const mapStateToProps = state => ({
 	list: state.getIn(["header", "list"]),
 	mouseIn: state.getIn(["header", "mouseIn"]),
 	page: state.getIn(["header", "page"]),
-	totalPage: state.getIn(["header", "totalPage"]),
+	totalPage: state.getIn(["header", "totalPage"])
 })
 
 const mapDispatchToProps = dispatch => {
@@ -120,7 +134,7 @@ const mapDispatchToProps = dispatch => {
 			dispatch(actionCreators.mouseLeave())
 		},
 		handleChangePage(page, totalPage, spin) {
-			let originAngle = spin.style.transform.replace(/[^0-9]/ig, '')
+			let originAngle = spin.style.transform.replace(/[^0-9]/gi, "")
 			if (originAngle) {
 				originAngle = parseInt(originAngle)
 			} else {
@@ -129,8 +143,7 @@ const mapDispatchToProps = dispatch => {
 			spin.style.transform = `rotate(${originAngle + 360}deg)`
 			if (page < totalPage) {
 				dispatch(actionCreators.changePage(page + 1))
-			}
-			else {
+			} else {
 				dispatch(actionCreators.changePage(1))
 			}
 		}

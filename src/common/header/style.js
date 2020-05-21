@@ -2,15 +2,14 @@ import styled from 'styled-components'
 import logPic from '../../static/imgs/logo.png'
 
 export const HeaderWrapper = styled.div`
-  position: relative;
+  position: fixed;
   height: 56px;
   border-bottom: 1px solid #f0f0f0;
   width: 100%;
+  background: #fff;
 `
 
-export const Logo = styled.a.attrs({
-  href: "/"
-})`
+export const Logo = styled.div`
   width: 100px;
   height: 56px;
   display: block;
@@ -80,6 +79,7 @@ export const SearchInfo = styled.div`
   width: 240px;
   padding: 0 20px;
   box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+  background: #fff;
   &:before {
     position: absolute;
     background-color: #fff;
